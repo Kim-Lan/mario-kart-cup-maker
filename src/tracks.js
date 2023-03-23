@@ -41,7 +41,7 @@ export const marioKartGames = [
     ]
   },
   {
-    'gameName': 'Mario Kart: Double Dash',
+    'gameName': 'Mario Kart: Double Dash!!',
     'cups': [
       { 'cupName': 'Mushroom Cup',
         'tracks': ['Luigi Circuit', 'Peach Beach', 'Baby Park', 'Dry Dry Desert'] },

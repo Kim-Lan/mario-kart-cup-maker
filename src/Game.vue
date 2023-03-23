@@ -1,8 +1,8 @@
 <script setup>
 
 const props = defineProps({
-  cupName: String,
-  tracks: Array
+  gameName: String,
+  cups: Array
 });
 </script>
 
