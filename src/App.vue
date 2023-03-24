@@ -2,33 +2,36 @@
 import { ref } from 'vue';
 import draggable from 'vuedraggable';
 import { marioKartGames } from './tracks.js';
+import Game from './components/Game.vue';
+import Cup from './components/Cup.vue';
+import Track from './components/Track.vue';
+
 const selectedTracks = ref([]);
 
 
 </script>
 
 <template>
-  <v-app>
-    <v-main>
+  <main>
+    <div id="topbar" class="w-full">
+      <h1 class="text-2xl font-bold">Mario Kart Cup Maker</h1>
+    </div>
+    <div id="custom-cup">
       <v-text-field label="My Custom Cup"></v-text-field>
+    </div>
+    <div id="index">
+      <Game v-for="game in marioKartGames">
+        <Cup v-for="cup in game.cups">
+          <Track v-for="track in cup.tracks" />
+        </Cup>
+      </Game>
+    </div>
 
-      <v-expansion-panels>
-        <v-expansion-panel v-for="game in marioKartGames">
-          <v-expansion-panel-title>{{ game.gameName }}</v-expansion-panel-title>
-          <v-expansion-panel-text>
-            <v-expansion-panels>
-              <v-expansion-panel v-for="cup in game.cups">
-                <v-expansion-panel-title>{{ cup.cupName }}</v-expansion-panel-title>
-                <v-expansion-panel-text>
-                  <v-list-item v-for="track in cup.tracks">{{ track }}</v-list-item>
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </v-main>
-  </v-app>
+  </main>
 </template>
 
-
+<style>
+main {
+  padding: 20px 30px;
+}
+</style>
