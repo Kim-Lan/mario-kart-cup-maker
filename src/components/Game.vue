@@ -7,5 +7,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <div></div>
+  <div>
+    <h2>{{ props.gameName }}</h2>
+    <slot></slot>
+  </div>
 </template>

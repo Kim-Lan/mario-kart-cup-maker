@@ -7,5 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div></div>
+  <div>
+    <h4>{{ props.trackName }}</h4>
+  </div>
 </template>

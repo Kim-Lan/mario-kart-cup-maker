@@ -7,5 +7,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <div></div>
+  <div>
+    <h3>{{ props.cupName }}</h3>
+    <slot></slot>
+  </div>
 </template>

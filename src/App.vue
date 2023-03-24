@@ -16,13 +16,13 @@ const selectedTracks = ref([]);
     <div id="topbar" class="w-full">
       <h1 class="text-2xl font-bold">Mario Kart Cup Maker</h1>
     </div>
-    <div id="custom-cup">
+    <div id="custom-cup" class="w-full">
       <v-text-field label="My Custom Cup"></v-text-field>
     </div>
     <div id="index">
-      <Game v-for="game in marioKartGames">
-        <Cup v-for="cup in game.cups">
-          <Track v-for="track in cup.tracks" />
+      <Game v-for="game in marioKartGames" :game-name=game.gameName>
+        <Cup v-for="cup in game.cups" :cup-name="cup.cupName">
+          <Track v-for="track in cup.tracks" :track-name="track" />
         </Cup>
       </Game>
     </div>
