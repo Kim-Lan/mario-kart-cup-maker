@@ -14,7 +14,7 @@ const selectedTracks = ref([]);
 <template>
   <main>
     <div id="topbar" class="w-full">
-      <h1 class="text-2xl font-bold">Mario Kart Cup Maker</h1>
+      <h1 class="text-3xl font-bold">Mario Kart Cup Maker</h1>
     </div>
     <div id="custom-cup" class="w-full">
       <v-text-field label="My Custom Cup"></v-text-field>

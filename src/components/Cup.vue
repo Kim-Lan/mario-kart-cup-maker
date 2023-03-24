@@ -7,8 +7,10 @@ const props = defineProps({
 </script>
 
 <template>
-  <div>
-    <h3>{{ props.cupName }}</h3>
-    <slot></slot>
+  <div class="p-2">
+    <h3 class="font-semibold text-l">{{ props.cupName }}</h3>
+    <div class="flex flex-row px-3">
+      <slot></slot>
+    </div>
   </div>
 </template>
