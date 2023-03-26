@@ -13,8 +13,20 @@ import { createApp } from 'vue'
 // Plugins
 import { registerPlugins } from '@/plugins'
 
-const app = createApp(App)
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
 
-registerPlugins(app)
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-app.mount('#app')
+/* import specific icons */
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+
+/* add icons to the library */
+library.add(faMoon, faSun);
+
+const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
+
+registerPlugins(app);
+
+app.mount('#app');
