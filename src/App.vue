@@ -12,14 +12,33 @@ const selectedTracks = ref([]);
 
 <template>
   <div class="px-8 py-4 flex flex-col bg-white text-gray-900 dark:bg-neutral-800 dark:text-neutral-100">
-    <div class="navbar w-full mb-3">
-      <div>
+    <div class="navbar mb-3">
+      <div class="navbar-start">
         <h1 class="text-3xl font-bold">Mario Kart Cup Maker</h1>
       </div>
-      <DarkModeToggle />
+      <div class="navbar-end">
+        <DarkModeToggle />
+      </div>
     </div>
-    <div class="w-full p-4">
-      <input type="text" placeholder="My Custom Cup" class="input" />
+    <div class="flex flex-col p-5 mx-10 mb-8 border-2 border-gray-900 dark:border-neutral-100 rounded-lg">
+      <div>
+        <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded" />
+      </div>
+      <div class="divider my-2"></div>
+      <div class="flex flex-row justify-between">
+        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
+
+        </div>
+        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
+
+        </div>
+        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
+
+        </div>
+        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
+
+        </div>
+      </div>
     </div>
     <div>
       <Game v-for="game in marioKartGames" :game-name=game.gameName>
