@@ -12,7 +12,7 @@ const selectedTracks = ref([]);
 
 <template>
   <div class="px-8 py-4 flex flex-col bg-white text-gray-900 dark:bg-neutral-800 dark:text-neutral-100">
-    <div class="navbar mb-3">
+    <div class="navbar mb-8">
       <div class="navbar-start">
         <h1 class="text-3xl font-bold">Mario Kart Cup Maker</h1>
       </div>
@@ -31,7 +31,7 @@ const selectedTracks = ref([]);
         </div>
         <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
 
-        </div>
+      </div>
         <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
 
         </div>
@@ -39,6 +39,12 @@ const selectedTracks = ref([]);
 
         </div>
       </div>
+    </div>
+    <div class="btn-group btn-group-vertical">
+      <!-- <div v-for="game in marioKartGames" class="p-2">
+                                                      <h3 class="text-lg">{{ game.gameName }}</h3>
+                                                    </div> -->
+      <input v-for="game in marioKartGames" type="radio" name="game-tab" class="btn" :data-title="game.gameName" />
     </div>
     <div>
       <Game v-for="game in marioKartGames" :game-name=game.gameName>

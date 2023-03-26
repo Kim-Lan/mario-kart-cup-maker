@@ -7,9 +7,10 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="my-3">
-    <h2 class="font-bold text-xl">{{ props.gameName }}</h2>
-    <div class="px-3">
+  <div class="collapse collapse-arrow my-3">
+    <input type="checkbox" class="peer" />
+    <h2 class="collapse-title font-bold text-xl">{{ props.gameName }}</h2>
+    <div class="collapse-content px-3">
       <slot></slot>
     </div>
   </div>
