@@ -101,7 +101,11 @@ function getPath(cupIndex, cupName, track) {
 
 <style scoped>
 .active {
-  background-color: #991b1b;
+  background-color: #b91c1c;
   color: #f5f5f5;
+}
+
+.active:hover {
+  background-color: #dc2626;
 }
 </style>
