@@ -1,18 +1,22 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import draggable from 'vuedraggable';
 import { marioKartGames } from './tracks.js';
 import DarkModeToggle from './components/DarkModeToggle.vue';
-import Game from './components/Game.vue';
 import Cup from './components/Cup.vue';
 import Track from './components/Track.vue';
 
 const selectedTracks = ref([]);
-const selectGame = ref('');
+const activeGame = reactive({
+  gameName: '',
+  cups: []
+});
 
-function selectTab(event, game) {
+function selectTab(game, event) {
   const target = event.currentTarget;
   const isActive = target.classList.contains('active');
+  activeGame.gameName = '';
+  activeGame.cups = [];
 
   const tabItems = document.getElementsByClassName('tab-item');
   for (let i = 0; i < tabItems.length; i++) {
@@ -20,12 +24,31 @@ function selectTab(event, game) {
   }
 
   if (!isActive)
+  {
     event.currentTarget.classList.add('active');
+    activeGame.gameName = game.gameName;
+    activeGame.cups = game.cups;
+  }
+}
+
+function getPath(cupIndex, cupName, track) {
+  let gameIndex = 0;
+  for (let i = 0; i < marioKartGames.length; i++) {
+    if (marioKartGames[i].gameName === activeGame.gameName)
+      gameIndex = i;
+  }
+  let path_gameIndex = (gameIndex + 1).toString().padStart(2, '0');
+
+  let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
+
+  return `assets/${path_gameIndex}.${activeGame.gameName.replaceAll(':', '')}`
+    + `/${path_cupIndex}.${cupName}`
+    + `/${track.replaceAll(' ', '_').replaceAll('-', '_').replaceAll('.', '')}.png`;
 }
 </script>
 
 <template>
-  <div class="px-8 py-4 flex flex-col bg-white text-gray-900 dark:bg-neutral-800 dark:text-neutral-100">
+  <div class="px-8 py-4 flex flex-col bg-white text-gray-900 dark:bg-neutral-800 dark:text-neutral-100 min-h-screen">
     <div class="navbar mb-8">
       <div class="navbar-start">
         <h1 class="text-3xl font-bold">Mario Kart Cup Maker</h1>
@@ -57,21 +80,28 @@ function selectTab(event, game) {
 
     <div class="flex flex-row border">
       <div class="tab-group w-1/5 flex flex-col flex-auto">
-        <button v-for="game in marioKartGames" class="p-2 border tab-item" @click="selectTab($event, $game)">
+        <button v-for="game in marioKartGames" class="tab-item p-2 btn btn-ghost rounded-none no-animation"
+          @click="selectTab(game, $event)">
           {{ game.gameName }}
         </button>
-      </div>
-      <div class="border w-full">
 
       </div>
-    </div>
-
-    <div>
-      <Game v-for="game in marioKartGames" :game-name=game.gameName>
-        <Cup v-for="cup in game.cups" :cup-name="cup.cupName">
-          <Track v-for="track in cup.tracks" :track-name="track" />
+      <div class="w-full tab-content flex-auto py-3 px-5 border-l">
+        <div>
+          <h2 class="text-xl font-bold uppercase">{{ activeGame.gameName }}</h2>
+        </div>
+        <Cup v-for="(cup, index) in activeGame.cups" :cup-name="cup.cupName" :key="cup.cupName">
+          <Track v-for="track in cup.tracks" :key="track" :cup-name="cup.cupName" :track-name="track"
+            :image-path="getPath(index, cup.cupName, track)" />
         </Cup>
-      </Game>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.active {
+  background-color: #991b1b;
+  color: #f5f5f5;
+}
+</style>
