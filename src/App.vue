@@ -8,6 +8,20 @@ import Cup from './components/Cup.vue';
 import Track from './components/Track.vue';
 
 const selectedTracks = ref([]);
+const selectGame = ref('');
+
+function selectTab(event, game) {
+  const target = event.currentTarget;
+  const isActive = target.classList.contains('active');
+
+  const tabItems = document.getElementsByClassName('tab-item');
+  for (let i = 0; i < tabItems.length; i++) {
+    tabItems[i].classList.remove('active');
+  }
+
+  if (!isActive)
+    event.currentTarget.classList.add('active');
+}
 </script>
 
 <template>
@@ -31,7 +45,7 @@ const selectedTracks = ref([]);
         </div>
         <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
 
-      </div>
+        </div>
         <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
 
         </div>
@@ -40,12 +54,18 @@ const selectedTracks = ref([]);
         </div>
       </div>
     </div>
-    <div class="btn-group btn-group-vertical">
-      <!-- <div v-for="game in marioKartGames" class="p-2">
-                                                      <h3 class="text-lg">{{ game.gameName }}</h3>
-                                                    </div> -->
-      <input v-for="game in marioKartGames" type="radio" name="game-tab" class="btn" :data-title="game.gameName" />
+
+    <div class="flex flex-row border">
+      <div class="tab-group w-1/5 flex flex-col flex-auto">
+        <button v-for="game in marioKartGames" class="p-2 border tab-item" @click="selectTab($event, $game)">
+          {{ game.gameName }}
+        </button>
+      </div>
+      <div class="border w-full">
+
+      </div>
     </div>
+
     <div>
       <Game v-for="game in marioKartGames" :game-name=game.gameName>
         <Cup v-for="cup in game.cups" :cup-name="cup.cupName">
