@@ -5,8 +5,8 @@ import { marioKartGames } from './tracks.js';
 import DarkModeToggle from './components/DarkModeToggle.vue';
 import Cup from './components/Cup.vue';
 import Track from './components/Track.vue';
+import { selectedTracks } from './stores.js'
 
-const selectedTracks = ref([]);
 const activeGame = reactive({
   gameName: '',
   cups: []
@@ -45,6 +45,7 @@ function getPath(cupIndex, cupName, track) {
     + `/${path_cupIndex}.${cupName}`
     + `/${track.replaceAll(' ', '_').replaceAll('-', '_').replaceAll('.', '')}.png`;
 }
+
 </script>
 
 <template>
@@ -62,19 +63,11 @@ function getPath(cupIndex, cupName, track) {
         <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded" />
       </div>
       <div class="divider my-2"></div>
-      <div class="flex flex-row justify-between">
-        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
-
+      <div class="flex flex-row justify-between gap-4">
+        <div v-for="selected in selectedTracks" class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded">
+          <Track v-if="selected !== null" v-bind="selected" class="w-full" />
         </div>
-        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
 
-        </div>
-        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
-
-        </div>
-        <div class="w-1/5 h-5 border border-gray-100 dark:border-zinc-700 rounded">
-
-        </div>
       </div>
     </div>
 
@@ -91,8 +84,8 @@ function getPath(cupIndex, cupName, track) {
           <h2 class="text-xl font-bold uppercase">{{ activeGame.gameName }}</h2>
         </div>
         <Cup v-for="(cup, index) in activeGame.cups" :cup-name="cup.cupName" :key="cup.cupName">
-          <Track v-for="track in cup.tracks" :key="track" :cup-name="cup.cupName" :track-name="track"
-            :image-path="getPath(index, cup.cupName, track)" />
+          <Track v-for="track in cup.tracks" :key="track" :game-name="activeGame.gameName" :cup-name="cup.cupName"
+            :track-name="track" :image-path="getPath(index, cup.cupName, track)" class="w-1/4" />
         </Cup>
       </div>
     </div>
