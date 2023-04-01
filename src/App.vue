@@ -3,6 +3,7 @@ import { ref, reactive } from 'vue';
 import draggable from 'vuedraggable';
 import { marioKartGames } from './tracks.js';
 import DarkModeToggle from './components/DarkModeToggle.vue';
+import Game from './components/Game.vue';
 import Cup from './components/Cup.vue';
 import Track from './components/Track.vue';
 import { selectedTracks } from './stores.js'
@@ -23,25 +24,35 @@ function selectTab(game, event) {
     tabItems[i].classList.remove('active');
   }
 
+  const tabContent = document.getElementsByClassName('tab-content');
+  for (let i = 0; i < tabContent.length; i++) {
+    tabContent[i].classList.add('hidden');
+  }
+
   if (!isActive)
   {
     event.currentTarget.classList.add('active');
     activeGame.gameName = game.gameName;
     activeGame.cups = game.cups;
+    document.getElementById(activeGame.gameName).classList.remove('hidden');
+  }
+  else
+  {
+    document.getElementById('empty-content').classList.remove('hidden');
   }
 }
 
-function getPath(cupIndex, cupName, track) {
+function getPath(gameName, cupIndex, cupName, track) {
   let gameIndex = 0;
   for (let i = 0; i < marioKartGames.length; i++) {
-    if (marioKartGames[i].gameName === activeGame.gameName)
+    if (marioKartGames[i].gameName === gameName)
       gameIndex = i;
   }
   let path_gameIndex = (gameIndex + 1).toString().padStart(2, '0');
 
   let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
 
-  return `assets/${path_gameIndex}.${activeGame.gameName.replaceAll(':', '')}`
+  return `assets/${path_gameIndex}.${gameName.replaceAll(':', '')}`
     + `/${path_cupIndex}.${cupName}`
     + `/${track.replaceAll(' ', '_').replaceAll('-', '_').replaceAll('.', '')}.png`;
 }
@@ -64,8 +75,8 @@ function getPath(cupIndex, cupName, track) {
       </div>
       <div class="divider my-2"></div>
       <div class="flex flex-row justify-between gap-4">
-        <div v-for="selected in selectedTracks" class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded">
-          <Track v-if="selected !== null" v-bind="selected" class="w-full" />
+        <div v-for="selected in selectedTracks" class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded-lg">
+          <Track is-display v-if="selected !== null" v-bind="selected" class="w-full" />
         </div>
 
       </div>
@@ -79,15 +90,13 @@ function getPath(cupIndex, cupName, track) {
         </button>
 
       </div>
-      <div class="w-full tab-content flex-auto py-3 px-5 border-l">
-        <div>
-          <h2 class="text-xl font-bold uppercase">{{ activeGame.gameName }}</h2>
-        </div>
-        <Cup v-for="(cup, index) in activeGame.cups" :cup-name="cup.cupName" :key="cup.cupName">
-          <Track v-for="track in cup.tracks" :key="track" :game-name="activeGame.gameName" :cup-name="cup.cupName"
-            :track-name="track" :image-path="getPath(index, cup.cupName, track)" class="w-1/4" />
+      <div class="w-full tab-content flex-auto py-3 px-5 border-l" id="empty-content"></div>
+      <Game v-for="game in marioKartGames" :id="game.gameName">
+        <Cup v-for="(cup, index) in game.cups" :cup-name="cup.cupName" :key="cup.cupName">
+          <Track v-for="track in cup.tracks" :key="track" :game-name="game.gameName" :cup-name="cup.cupName"
+            :track-name="track" :image-path="getPath(game.gameName, index, cup.cupName, track)" class="w-1/4" />
         </Cup>
-      </div>
+      </Game>
     </div>
   </div>
 </template>

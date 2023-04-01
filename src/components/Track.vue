@@ -6,15 +6,14 @@ const props = defineProps({
   gameName: String,
   cupName: String,
   trackName: String,
-  imagePath: String
+  imagePath: String,
+  isDisplay: Boolean
 });
 
 const isSelected = ref(false);
 
 function onClick() {
-  console.log('clicked ' + props.trackName);
-  console.log('track count ' + trackCount.value);
-  if (isSelected.value || trackCount.value < 4) {
+  if (!props.isDisplay && (isSelected.value || trackCount.value < 4)) {
     toggleSelect();
   }
 }
@@ -35,7 +34,12 @@ function toggleSelect() {
     for (let i = 0; i < selectedTracks.length; i++) {
       if (!selectedTracks[i]) {
         console.log('null track');
-        selectedTracks[i] = props;
+        selectedTracks[i] = {
+          gameName: props.gameName,
+          cupName: props.cupName,
+          trackName: props.trackName,
+          imagePath: props.imagePath
+        }
         break;
       }
     }
