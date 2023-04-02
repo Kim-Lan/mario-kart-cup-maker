@@ -24,7 +24,8 @@ function toggleSelect() {
     console.log('deselecting');
     for (let i = 0; i < selectedTracks.length; i++) {
       if (selectedTracks[i] !== null && selectedTracks[i].trackName === props.trackName) {
-        selectedTracks[i] = null;
+        //selectedTracks[i] = null;
+        selectedTracks[i] = {};
         break;
       }
     }
@@ -32,7 +33,7 @@ function toggleSelect() {
   } else {
     console.log('selecting');
     for (let i = 0; i < selectedTracks.length; i++) {
-      if (!selectedTracks[i]) {
+      if (!selectedTracks[i] || Object.keys(selectedTracks[i]).length === 0) {
         console.log('null track');
         selectedTracks[i] = {
           gameName: props.gameName,
@@ -52,16 +53,19 @@ function toggleSelect() {
 </script>
 
 <template>
-  <div class="flex-auto rounded-lg overflow-hidden shadow-md shadow-neutral-300 dark:shadow-neutral-900" :class="{
-    'outline outline-4 outline-cyan-200 dark:outline-cyan-100': isSelected,
-    'bg-red-700 text-neutral-100 hover:bg-red-600': props.cupName === 'Mushroom Cup',
-    'bg-green-600 text-neutral-100 hover:bg-green-400': props.cupName === 'Flower Cup',
-    'bg-yellow-400 text-stone-800 hover:bg-yellow-300': props.cupName === 'Star Cup',
-    'bg-violet-700 text-neutral-100 hover:bg-violet-500': props.cupName === 'Special Cup',
-    'bg-yellow-200 text-stone-800 hover:bg-yellow-100': props.cupName === 'Thunder Cup'
-  }" @click="onClick">
+  <div
+    class="w-2/5 flex-initial md:flex-1 rounded-md overflow-hidden shadow-md shadow-neutral-300 dark:shadow-neutral-900 cursor-pointer"
+    :class="{
+      'outline outline-4 outline-cyan-200 dark:outline-cyan-100': isSelected,
+      'bg-red-700 text-neutral-100 hover:bg-red-600': props.cupName === 'Mushroom Cup',
+      'bg-green-600 text-neutral-100 hover:bg-green-400': props.cupName === 'Flower Cup',
+      'bg-yellow-400 text-stone-800 hover:bg-yellow-300': props.cupName === 'Star Cup',
+      'bg-violet-700 text-neutral-100 hover:bg-violet-500': props.cupName === 'Special Cup',
+      'bg-yellow-200 text-stone-800 hover:bg-yellow-100': props.cupName === 'Thunder Cup'
+    }" @click="onClick">
     <img :src="props.imagePath" class="w-full pointer-events-none" />
-    <h4 class="mx-3 my-2 font-semibold pointer-events-none">{{ props.trackName }}</h4>
+    <h4 class="text-center lg:mx-3 lg:my-2 sm:mx-1 sm:my-1 sm:text-xs lg:text-base font-semibold pointer-events-none">{{
+      props.trackName }}</h4>
   </div>
 </template>
 

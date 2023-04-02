@@ -6,12 +6,21 @@ import DarkModeToggle from './components/DarkModeToggle.vue';
 import Game from './components/Game.vue';
 import Cup from './components/Cup.vue';
 import Track from './components/Track.vue';
-import { selectedTracks } from './stores.js'
+import { selectedTracks, trackCount } from './stores.js'
 
 const activeGame = reactive({
   gameName: '',
   cups: []
 });
+
+const test = ref([
+  'one',
+  'two',
+  'three',
+  null
+]);
+
+const isSidebarOpen = ref(false);
 
 function selectTab(game, event) {
   const target = event.currentTarget;
@@ -60,44 +69,68 @@ function getPath(gameName, cupIndex, cupName, track) {
 </script>
 
 <template>
-  <div class="px-8 py-4 flex flex-col bg-white text-gray-900 dark:bg-neutral-800 dark:text-neutral-100 min-h-screen">
-    <div class="navbar mb-8">
-      <div class="navbar-start">
-        <h1 class="text-3xl font-bold">Mario Kart Cup Maker</h1>
+  <div
+    class="pl-4 pr-2 md:px-8 md:py-4 flex flex-col bg-white text-gray-900 dark:bg-neutral-800 dark:text-neutral-100 min-h-screen">
+    <div class="navbar md:mb-8 pr-0">
+      <div class="flex-1 md:navbar-start">
+        <h1 class="text-2xl md:text-3xl font-bold">Mario Kart Cup Maker</h1>
       </div>
-      <div class="navbar-end">
+      <div class="flex-none">
+        <label class="btn btn-circle btn-ghost swap swap-rotate">
+          <input type="checkbox" v-model="isSidebarOpen" />
+          <font-awesome-icon :icon="['fas', 'bars']" size="xl" class="swap-off" />
+          <font-awesome-icon :icon="['fas', 'xmark']" size="xl" class="swap-on" />
+        </label>
+      </div>
+    </div>
+
+    <div class="flex flex-row-reverse">
+      <div :class="{ block: isSidebarOpen, hidden: !isSidebarOpen }" class="flex-none w-full lg:w-1/4 mx-4 px-4">
         <DarkModeToggle />
       </div>
-    </div>
-    <div class="flex flex-col p-5 mx-10 mb-8 border-2 border-gray-900 dark:border-neutral-100 rounded-lg">
-      <div>
-        <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded" />
-      </div>
-      <div class="divider my-2"></div>
-      <div class="flex flex-row justify-between gap-4">
-        <div v-for="selected in selectedTracks" class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded-lg">
-          <Track is-display v-if="selected !== null" v-bind="selected" class="w-full" />
+
+      <div class="flex-1">
+        <div class="flex flex-col p-5 mx-10 mb-8 border-2 border-gray-900 dark:border-neutral-100 rounded-lg">
+          <div>
+            <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded" />
+          </div>
+          <div class="divider my-2"></div>
+          <!-- <div class="flex flex-row justify-between gap-4">
+                                                  <div v-for="selected in selectedTracks" class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded-md">
+                                                    <Track is-display v-if="selected !== null" v-bind="selected" class="w-full" />
+                                                  </div>
+                                                </div> -->
+
+          <draggable :list="selectedTracks" item-key="id" class="flex flex-row justify-between gap-4">
+            <template #item="{ element }">
+              <div class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded-md">
+                <Track is-display v-if="element !== null" v-bind="element" class="w-full" />
+              </div>
+            </template>
+          </draggable>
         </div>
 
+        <div class="flex flex-row border">
+          <div class="hidden tab-group w-1/5 md:flex flex-col flex-auto">
+            <button v-for="game in marioKartGames"
+              class="tab-item p-2 btn btn-ghost lg:text-base sm:text-xs rounded-none no-animation"
+              @click="selectTab(game, $event)">
+              {{ game.gameName }}
+            </button>
+          </div>
+          <div class="w-full tab-content flex-auto py-3 px-5 border-l" id="empty-content"></div>
+          <Game v-for="game in marioKartGames" :id="game.gameName">
+            <Cup v-for="(cup, index) in game.cups" :cup-name="cup.cupName" :key="cup.cupName">
+              <Track v-for="track in cup.tracks" :key="track" :game-name="game.gameName" :cup-name="cup.cupName"
+                :track-name="track" :image-path="getPath(game.gameName, index, cup.cupName, track)" />
+            </Cup>
+          </Game>
+        </div>
       </div>
     </div>
 
-    <div class="flex flex-row border">
-      <div class="tab-group w-1/5 flex flex-col flex-auto">
-        <button v-for="game in marioKartGames" class="tab-item p-2 btn btn-ghost rounded-none no-animation"
-          @click="selectTab(game, $event)">
-          {{ game.gameName }}
-        </button>
 
-      </div>
-      <div class="w-full tab-content flex-auto py-3 px-5 border-l" id="empty-content"></div>
-      <Game v-for="game in marioKartGames" :id="game.gameName">
-        <Cup v-for="(cup, index) in game.cups" :cup-name="cup.cupName" :key="cup.cupName">
-          <Track v-for="track in cup.tracks" :key="track" :game-name="game.gameName" :cup-name="cup.cupName"
-            :track-name="track" :image-path="getPath(game.gameName, index, cup.cupName, track)" class="w-1/4" />
-        </Cup>
-      </Game>
-    </div>
+
   </div>
 </template>
 
