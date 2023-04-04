@@ -53,19 +53,21 @@ function toggleSelect() {
 </script>
 
 <template>
-  <div
-    class="w-2/5 flex-initial md:flex-1 rounded-md overflow-hidden shadow-md shadow-neutral-300 dark:shadow-neutral-900 cursor-pointer"
+  <div class="flex-1 rounded-md overflow-hidden shadow-md shadow-neutral-300 dark:shadow-neutral-900 cursor-pointer"
     :class="{
       'outline outline-4 outline-cyan-200 dark:outline-cyan-100': isSelected,
-      'bg-red-700 text-neutral-100 hover:bg-red-600': props.cupName === 'Mushroom Cup',
-      'bg-green-600 text-neutral-100 hover:bg-green-400': props.cupName === 'Flower Cup',
-      'bg-yellow-400 text-stone-800 hover:bg-yellow-300': props.cupName === 'Star Cup',
-      'bg-violet-700 text-neutral-100 hover:bg-violet-500': props.cupName === 'Special Cup',
-      'bg-yellow-200 text-stone-800 hover:bg-yellow-100': props.cupName === 'Thunder Cup'
+      'bg-red-700 text-neutral-100 hover:bg-red-600': props.cupName === 'Mushroom Cup' && !props.isDisplay,
+      'bg-green-600 text-neutral-100 hover:bg-green-400': props.cupName === 'Flower Cup' && !props.isDisplay,
+      'bg-yellow-400 text-stone-800 hover:bg-yellow-300': props.cupName === 'Star Cup' && !props.isDisplay,
+      'bg-violet-700 text-neutral-100 hover:bg-violet-500': props.cupName === 'Special Cup' && !props.isDisplay,
+      'bg-yellow-200 text-stone-800 hover:bg-yellow-100': props.cupName === 'Thunder Cup' && !props.isDisplay
     }" @click="onClick">
-    <img :src="props.imagePath" class="w-full pointer-events-none" />
-    <h4 class="text-center lg:mx-3 lg:my-2 sm:mx-1 sm:my-1 sm:text-xs lg:text-base font-semibold pointer-events-none">{{
-      props.trackName }}</h4>
+    <img :src="props.imagePath" class="w-full" />
+    <h4 class="lg:mx-3 mx-1 text-xs lg:text-base font-semibold" :class="{
+      'text-center my-1 lg:my-2': !props.isDisplay,
+      'text-left mt-1 lg:mt-2': props.isDisplay
+    }">{{ props.trackName }}</h4>
+    <div v-if="props.isDisplay" class="hidden sm:block mb-2 lg:mx-3 mx-1 text-xs text-left">{{ props.gameName }}</div>
   </div>
 </template>
 

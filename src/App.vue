@@ -6,19 +6,12 @@ import DarkModeToggle from './components/DarkModeToggle.vue';
 import Game from './components/Game.vue';
 import Cup from './components/Cup.vue';
 import Track from './components/Track.vue';
-import { selectedTracks, trackCount } from './stores.js'
+import { selectedTracks } from './stores.js'
 
 const activeGame = reactive({
   gameName: '',
   cups: []
 });
-
-const test = ref([
-  'one',
-  'two',
-  'three',
-  null
-]);
 
 const isSidebarOpen = ref(false);
 
@@ -95,23 +88,18 @@ function getPath(gameName, cupIndex, cupName, track) {
             <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded" />
           </div>
           <div class="divider my-2"></div>
-          <!-- <div class="flex flex-row justify-between gap-4">
-                                                  <div v-for="selected in selectedTracks" class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded-md">
-                                                    <Track is-display v-if="selected !== null" v-bind="selected" class="w-full" />
-                                                  </div>
-                                                </div> -->
-
-          <draggable :list="selectedTracks" item-key="id" class="flex flex-row justify-between gap-4">
+          <draggable id="track-display" :list="selectedTracks" item-key="id"
+            class="flex flex-row flex-wrap justify-between gap-4">
             <template #item="{ element }">
-              <div class="w-1/4 border border-gray-100 dark:border-zinc-700 rounded-md">
-                <Track is-display v-if="element !== null" v-bind="element" class="w-full" />
+              <div class="flex-1 border border-gray-100 dark:border-zinc-700 rounded-md">
+                <Track is-display v-if="element !== null" v-bind="element" class="w-full h-full" />
               </div>
             </template>
           </draggable>
         </div>
 
         <div class="flex flex-row border">
-          <div class="hidden tab-group w-1/5 md:flex flex-col flex-auto">
+          <div class="tab-group w-1/5 flex flex-col flex-auto">
             <button v-for="game in marioKartGames"
               class="tab-item p-2 btn btn-ghost lg:text-base sm:text-xs rounded-none no-animation"
               @click="selectTab(game, $event)">
@@ -142,5 +130,25 @@ function getPath(gameName, cupIndex, cupName, track) {
 
 .active:hover {
   background-color: #dc2626;
+}
+
+#track-display div:first-child div {
+  background-color: #b91c1c;
+  color: #f5f5f5;
+}
+
+#track-display div:nth-child(2) div {
+  background-color: #16a34a;
+  color: #f5f5f5;
+}
+
+#track-display div:nth-child(3) div {
+  background-color: #facc15;
+  color: #292524;
+}
+
+#track-display div:nth-child(4) div {
+  background-color: #6d28d9;
+  color: #f5f5f5;
 }
 </style>
