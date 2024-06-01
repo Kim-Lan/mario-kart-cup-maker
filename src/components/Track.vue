@@ -7,7 +7,7 @@ const props = defineProps({
   cupName: String,
   trackName: String,
   imagePath: String,
-  isDisplay: Boolean
+  isDisplay: Boolean,
 });
 
 const isSelected = ref(false);
@@ -19,9 +19,9 @@ function onClick() {
 }
 
 function toggleSelect() {
-  console.log('toggle select');
+  // console.log('toggle select');
   if (isSelected.value) {
-    console.log('deselecting');
+    // console.log('deselecting');
     for (let i = 0; i < selectedTracks.length; i++) {
       if (selectedTracks[i] !== null && selectedTracks[i].trackName === props.trackName) {
         //selectedTracks[i] = null;
@@ -31,10 +31,10 @@ function toggleSelect() {
     }
     trackCount.value--;
   } else {
-    console.log('selecting');
+    // console.log('selecting');
     for (let i = 0; i < selectedTracks.length; i++) {
       if (!selectedTracks[i] || Object.keys(selectedTracks[i]).length === 0) {
-        console.log('null track');
+        // console.log('null track');
         selectedTracks[i] = {
           gameName: props.gameName,
           cupName: props.cupName,
@@ -47,13 +47,20 @@ function toggleSelect() {
     trackCount.value++;
   }
   isSelected.value = !isSelected.value;
-  console.log('new track count ' + trackCount.value);
+  // console.log('new track count ' + trackCount.value);
 }
 
 </script>
 
 <template>
-  <div class="flex-1 rounded-md overflow-hidden shadow-md shadow-neutral-300 dark:shadow-neutral-900 cursor-pointer"
+  <div
+    class="flex-1 drop-shadow cursor-pointer"
+    :class="{ 'rounded outline outline-4 outline-cyan-200 bg-cyan-200 dark:outline-cyan-100 dark:bg-cyan-100' : isSelected }"
+    @click="onClick">
+    <img :src="props.imagePath" :alt="props.trackName" class="w-full" />
+  </div>
+  
+  <!-- <div class="flex-1 rounded-md overflow-hidden shadow-md shadow-neutral-300 dark:shadow-neutral-900 cursor-pointer"
     :class="{
       'outline outline-4 outline-cyan-200 dark:outline-cyan-100': isSelected,
       'bg-red-700 text-neutral-100 hover:bg-red-600': props.cupName === 'Mushroom Cup' && !props.isDisplay,
@@ -68,7 +75,7 @@ function toggleSelect() {
       'text-left mt-1 lg:mt-2': props.isDisplay
     }">{{ props.trackName }}</h4>
     <div v-if="props.isDisplay" class="hidden sm:block mb-2 lg:mx-3 mx-1 text-xs text-left">{{ props.gameName }}</div>
-  </div>
+  </div> -->
 </template>
 
 <style>
