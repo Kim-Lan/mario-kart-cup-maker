@@ -1,5 +1,4 @@
 <script setup>
-import { ref, reactive } from 'vue';
 import draggable from 'vuedraggable';
 import { Cups } from './cups.js';
 import DarkModeToggle from './components/DarkModeToggle.vue';
@@ -22,7 +21,7 @@ function onIconClicked() {
 function getCupPath(cupIndex, cupName) {
   let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
 
-  return `assets/09.Mario Kart 8 Deluxe`
+  return `assets/Mario Kart 8 Deluxe`
     + `/${path_cupIndex}.${cupName}`
     + `/${cupName.replaceAll(' ', '_')}.png`;
 }
@@ -30,7 +29,7 @@ function getCupPath(cupIndex, cupName) {
 function getTrackPath(cupIndex, cupName, track) {
   let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
 
-  return `assets/09.Mario Kart 8 Deluxe`
+  return `assets/Mario Kart 8 Deluxe`
     + `/${path_cupIndex}.${cupName}`
     + `/${track.replaceAll(' ', '_').replaceAll(/[()]/g, '')}.png`;
 }
