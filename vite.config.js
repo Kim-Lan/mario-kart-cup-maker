@@ -7,7 +7,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: 'https://kim-lan.github.io/mario-kart-cup-maker/',
+  base: '/mario-kart-cup-maker/',
   plugins: [
     vue()
   ],

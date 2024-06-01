@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import draggable from 'vuedraggable';
 import { Cups } from './cups.js';
 import DarkModeToggle from './components/DarkModeToggle.vue';
@@ -7,11 +8,10 @@ import CupIcon from './components/CupIcon.vue';
 import Track from './components/Track.vue';
 import { selectedTracks, selectedIcon } from './stores.js'
 
-const cupIcons = [];
+const cupIcons = ref([]);
 
 function onIconClicked() {
-  console.log(selectedIcon.value.cupName);
-  for (const icon of cupIcons) {
+  for (const icon of cupIcons.value) {
     icon.setSelected(false);
     if (icon.getCupName() === selectedIcon.value.cupName) {
       icon.setSelected(true);
@@ -22,7 +22,7 @@ function onIconClicked() {
 function getCupPath(cupIndex, cupName) {
   let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
 
-  return `assets/Mario Kart 8 Deluxe`
+  return `/assets/Mario Kart 8 Deluxe`
     + `/${path_cupIndex}.${cupName}`
     + `/${cupName.replaceAll(' ', '_')}.png`;
 }
@@ -30,7 +30,7 @@ function getCupPath(cupIndex, cupName) {
 function getTrackPath(cupIndex, cupName, track) {
   let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
 
-  return `assets/Mario Kart 8 Deluxe`
+  return `/assets/Mario Kart 8 Deluxe`
     + `/${path_cupIndex}.${cupName}`
     + `/${track.replaceAll(' ', '_').replaceAll(/[()]/g, '')}.png`;
 }
@@ -69,12 +69,21 @@ function getTrackPath(cupIndex, cupName, track) {
           <p>Click to choose an icon and courses for your custom cup!</p>
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col mb-60">
           <Cup v-for="(cup, index) in Cups" :cup-name="cup.cupName" :id="cup.cupName" :key="cup.cupName">
             <CupIcon ref="cupIcons" :cup-name="cup.cupName" :image-path="getCupPath(index, cup.cupName)" @icon-clicked="onIconClicked" />
             <Track v-for="track in cup.tracks" :key="track" :game-name="'Mario Kart 8 Deluxe'" :cup-name="cup.cupName"
               :track-name="track" :image-path="getTrackPath(index, cup.cupName, track)" />
           </Cup>
+        </div>
+        <div class="flex flex-col items-center py-4">
+          <p>Developed by Kim-Lan</p>
+          <div class="flex flex-row align-center">
+            <button aria-label="github button"></button>
+            <a aria-label="ko-fi" href="https://ko-fi.com/kimlan" target="_blank">
+              <img src="/assets/kofi-logo.png" alt="ko-fi" width="40px" height="40px" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -89,33 +98,4 @@ body {
   @apply bg-gray-100;
   @apply dark:bg-neutral-800
 }
-
-.active {
-  background-color: #b91c1c;
-  color: #f5f5f5;
-}
-
-.active:hover {
-  background-color: #dc2626;
-}
-
-/* #track-display div:first-child div {
-  background-color: #b91c1c;
-  color: #f5f5f5;
-}
-
-#track-display div:nth-child(2) div {
-  background-color: #16a34a;
-  color: #f5f5f5;
-}
-
-#track-display div:nth-child(3) div {
-  background-color: #facc15;
-  color: #292524;
-}
-
-#track-display div:nth-child(4) div {
-  background-color: #6d28d9;
-  color: #f5f5f5;
-} */
 </style>
