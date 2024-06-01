@@ -22,7 +22,7 @@ function onIconClicked() {
 function getCupPath(cupIndex, cupName) {
   let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
 
-  return `/assets/Mario Kart 8 Deluxe`
+  return `assets/Mario Kart 8 Deluxe`
     + `/${path_cupIndex}.${cupName}`
     + `/${cupName.replaceAll(' ', '_')}.png`;
 }
@@ -30,7 +30,7 @@ function getCupPath(cupIndex, cupName) {
 function getTrackPath(cupIndex, cupName, track) {
   let path_cupIndex = (cupIndex + 1).toString().padStart(2, '0');
 
-  return `/assets/Mario Kart 8 Deluxe`
+  return `assets/Mario Kart 8 Deluxe`
     + `/${path_cupIndex}.${cupName}`
     + `/${track.replaceAll(' ', '_').replaceAll(/[()]/g, '')}.png`;
 }
