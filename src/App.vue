@@ -10,9 +10,10 @@ import { selectedTracks, selectedIcon } from './stores.js'
 const cupIcons = [];
 
 function onIconClicked() {
+  console.log(selectedIcon.value.cupName);
   for (const icon of cupIcons) {
     icon.setSelected(false);
-    if (icon.getImagePath() === selectedIcon.value) {
+    if (icon.getCupName() === selectedIcon.value.cupName) {
       icon.setSelected(true);
     }
   }
@@ -51,7 +52,7 @@ function getTrackPath(cupIndex, cupName, track) {
       <div class="flex-1">
         <div class="flex flex-col p-5 mx-10 mb-8 border-2 border-gray-900 dark:border-neutral-100 rounded-lg">
           <div class="flex flex-row items-center">
-            <CupIcon is-display :image-path="selectedIcon" />
+            <CupIcon is-display v-bind="selectedIcon.value" />
             <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded font-bold text-xl" />
           </div>
           <div class="divider my-2"></div>
@@ -70,7 +71,7 @@ function getTrackPath(cupIndex, cupName, track) {
 
         <div class="flex flex-col">
           <Cup v-for="(cup, index) in Cups" :cup-name="cup.cupName" :id="cup.cupName" :key="cup.cupName">
-            <CupIcon ref="cupIcons" :image-path="getCupPath(index, cup.cupName)" @icon-clicked="onIconClicked" />
+            <CupIcon ref="cupIcons" :cup-name="cup.cupName" :image-path="getCupPath(index, cup.cupName)" @icon-clicked="onIconClicked" />
             <Track v-for="track in cup.tracks" :key="track" :game-name="'Mario Kart 8 Deluxe'" :cup-name="cup.cupName"
               :track-name="track" :image-path="getTrackPath(index, cup.cupName, track)" />
           </Cup>

@@ -3,6 +3,7 @@ import { ref, computed, emit } from 'vue';
 import { selectedIcon } from '../stores.js';
 
 const props = defineProps({
+  cupName: String,
   imagePath: String,
   isDisplay: {
     type: Boolean,
@@ -12,7 +13,7 @@ const props = defineProps({
 
 const emit = defineEmits(['iconClicked']);
 
-defineExpose({ setSelected, getImagePath })
+defineExpose({ setSelected, getImagePath, getCupName })
 
 // const isSelected = computed(() => {
 //   return !props.isDisplay && props.imagePath === selectedIcon;
@@ -22,9 +23,12 @@ const isSelected = ref(false);
 function onClick() {
   if (!props.isDisplay) {
     if (!isSelected.value) {
-      selectedIcon.value = props.imagePath;
+      selectedIcon.value = {
+        cupName: props.cupName,
+        imagePath: props.imagePath,
+      };
     } else {
-      selectedIcon.value = '';
+      selectedIcon.value = {};
     }
     emit('iconClicked');
   }
@@ -36,6 +40,10 @@ function setSelected(value) {
 
 function getImagePath() {
   return props.imagePath;
+}
+
+function getCupName() {
+  return props.cupName;
 }
 </script>
 
