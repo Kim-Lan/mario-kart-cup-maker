@@ -1,15 +1,14 @@
 <script setup>
 const props = defineProps({
   cupName: String,
-  tracks: Array
+  tracks: Array,
 });
 
 </script>
 
 <template>
-  <div class="p-2">
-    <h3 class="font-semibold text-l mb-2">{{ props.cupName }}</h3>
-    <div class="flex flex-row flex-wrap gap-4">
+  <div class="w-full py-3 px-5 max-md:py-1 max-md:px-1">
+    <div class="flex flex-row gap-4 max-md:gap-1 items-center">
       <slot></slot>
     </div>
   </div>
