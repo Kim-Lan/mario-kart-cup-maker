@@ -1,44 +1,9 @@
-# default
+# Mario Kart 8 DX Cup Maker
 
-## Project setup
+## Description
 
-```
-# yarn
-yarn
+A Vue.js web application to create custom Mario Kart 8 DX cups.
 
-# npm
-npm install
+## Deployment
 
-# pnpm
-pnpm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-# yarn
-yarn dev
-
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-```
-
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
+Deployed to [GitHub Pages](kim-lan.github.io/mario-kart-cup-maker/)
