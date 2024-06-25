@@ -1,8 +1,6 @@
 .DS_Store
 node_modules
 /dist
-/public/assets/super_mario_kart_original
-/public/assets/super_mario_kart_no_sprites
 
 # local env files
 .env.local
