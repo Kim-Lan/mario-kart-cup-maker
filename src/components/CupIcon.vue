@@ -13,11 +13,8 @@ const props = defineProps({
 
 const emit = defineEmits(['iconClicked']);
 
-defineExpose({ setSelected, getImagePath, getCupName })
+defineExpose({ setSelected, getCupName })
 
-// const isSelected = computed(() => {
-//   return !props.isDisplay && props.imagePath === selectedIcon;
-// });
 const isSelected = ref(false);
 
 function onClick() {
@@ -36,10 +33,6 @@ function onClick() {
 
 function setSelected(value) {
   isSelected.value = value;
-}
-
-function getImagePath() {
-  return props.imagePath;
 }
 
 function getCupName() {

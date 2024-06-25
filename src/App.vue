@@ -59,14 +59,14 @@ function getTrackPath(cupIndex, cupName, track) {
           <draggable id="track-display" :list="selectedTracks" item-key="id"
             class="flex flex-row flex-wrap justify-between gap-4">
             <template #item="{ element }">
-              <div class="flex-1 border border-gray-100 dark:border-zinc-700 rounded-md">
+              <div class="flex-1 border border-gray-200 dark:border-zinc-700 rounded-md">
                 <Track is-display v-if="element !== null" v-bind="element" class="w-full h-full" />
               </div>
             </template>
           </draggable>
         </div>
-        <div class="pl-8">
-          <p>Click to choose an icon and courses for your custom cup!</p>
+        <div class="pl-8 pb-4">
+          <p>Click to choose an icon and courses for your custom cup! Drag courses to rearrange. Refresh the page to restart. When you're done, screenshot and share with your friends!</p>
         </div>
 
         <div class="flex flex-col mb-60">
@@ -78,8 +78,10 @@ function getTrackPath(cupIndex, cupName, track) {
         </div>
         <div class="flex flex-col items-center py-4">
           <p>Developed by Kim-Lan</p>
-          <div class="flex flex-row align-center">
-            <button aria-label="github button"></button>
+          <div class="flex flex-row items-center">
+            <a aria-label="github" href="https://github.com/Kim-Lan/mario-kart-cup-maker" target="_blank">
+              <img src="/assets/icons8-github-48.png" alt="ko-fi" width="24px" height="24px" />
+            </a>
             <a aria-label="ko-fi" href="https://ko-fi.com/kimlan" target="_blank">
               <img src="/assets/kofi-logo.png" alt="ko-fi" width="40px" height="40px" />
             </a>
@@ -87,9 +89,6 @@ function getTrackPath(cupIndex, cupName, track) {
         </div>
       </div>
     </div>
-
-
-
   </div>
 </template>
 
