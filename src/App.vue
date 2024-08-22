@@ -66,7 +66,7 @@ function getTrackPath(cupIndex, cupName, track) {
           </draggable>
         </div>
         <div class="pl-8 pb-4">
-          <p>Click to choose an icon and courses for your custom cup! Drag courses to rearrange. Click on a course again to remove it, or refresh the page to restart. When you're done, screenshot and share with your friends!</p>
+          <p>Click to choose an icon and courses for your custom cup! Drag courses to rearrange. Click on a course again to remove it, or refresh the page to restart. When you're done, screenshot and share!</p>
         </div>
 
         <div class="flex flex-col mb-60">
