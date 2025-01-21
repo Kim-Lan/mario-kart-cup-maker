@@ -39,56 +39,56 @@ function getTrackPath(cupIndex, cupName, track) {
 
 <template>
   <div class="max-w-3xl mx-auto flex flex-col text-gray-900 dark:text-neutral-100 min-h-screen">
-    <div class="flex flex-row space-between mt-4 mb-8">
-      <div class="flex-1">
-        <h1 class="text-2xl md:text-3xl font-bold">Mario Kart 8 DX Cup Maker</h1>
-      </div>
-      <div class="flex-none">
-        <DarkModeToggle />
-      </div>
-    </div>
+    <header class="flex flex-row space-between mt-4 mb-8">
+      <h1 class="text-2xl md:text-3xl font-bold">Mario Kart 8 DX Cup Maker</h1>
+      <DarkModeToggle />
+    </header>
 
-    <div class="flex flex-row-reverse">
-      <div class="flex-1">
-        <div class="flex flex-col p-5 mx-10 mb-8 border-2 border-gray-900 dark:border-neutral-100 rounded-lg">
-          <div class="flex flex-row items-center">
-            <CupIcon is-display v-bind="selectedIcon.value" />
-            <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded font-bold text-xl" />
-          </div>
-          <div class="divider my-2"></div>
-          <draggable id="track-display" :list="selectedTracks" item-key="id"
-            class="flex flex-row flex-wrap justify-between gap-4">
-            <template #item="{ element }">
-              <div class="flex-1 border border-gray-200 dark:border-zinc-700 rounded-md">
-                <Track is-display v-if="element !== null" v-bind="element" class="w-full h-full" />
-              </div>
-            </template>
-          </draggable>
+    <main>
+      <!-- Custom Cup -->
+      <div class="flex flex-col p-5 mx-10 mb-8 border-2 border-gray-900 dark:border-neutral-100 rounded-lg">
+        <div class="flex flex-row items-center">
+          <CupIcon is-display v-bind="selectedIcon.value" />
+          <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded font-bold text-xl" />
         </div>
-        <div class="pl-8 pb-4">
-          <p>Click to choose an icon and courses for your custom cup! Drag courses to rearrange. Click on a course again to remove it, or refresh the page to restart. When you're done, screenshot and share!</p>
-        </div>
+        <div class="divider my-2"></div>
+        <draggable id="track-display" :list="selectedTracks" item-key="id"
+          class="flex flex-row flex-wrap justify-between gap-4">
+          <template #item="{ element }">
+            <div class="flex-1 border border-gray-200 dark:border-zinc-700 rounded-md">
+              <Track is-display v-if="element !== null" v-bind="element" class="w-full h-full" />
+            </div>
+          </template>
+        </draggable>
+      </div>
 
-        <div class="flex flex-col mb-60">
-          <Cup v-for="(cup, index) in Cups" :cup-name="cup.cupName" :id="cup.cupName" :key="cup.cupName">
-            <CupIcon ref="cupIcons" :cup-name="cup.cupName" :image-path="getCupPath(index, cup.cupName)" @icon-clicked="onIconClicked" />
-            <Track v-for="track in cup.tracks" :key="track" :game-name="'Mario Kart 8 Deluxe'" :cup-name="cup.cupName"
-              :track-name="track" :image-path="getTrackPath(index, cup.cupName, track)" />
-          </Cup>
-        </div>
-        <div class="flex flex-col items-center py-4">
-          <p>Developed by Kim-Lan</p>
-          <div class="flex flex-row items-center">
-            <a aria-label="github" href="https://github.com/Kim-Lan/mario-kart-cup-maker" target="_blank">
-              <img src="/assets/icons8-github-48.png" alt="ko-fi" width="24px" height="24px" />
-            </a>
-            <a aria-label="ko-fi" href="https://ko-fi.com/kimlan" target="_blank">
-              <img src="/assets/kofi-logo.png" alt="ko-fi" width="40px" height="40px" />
-            </a>
-          </div>
+      <!-- Instructions -->
+      <div class="pl-8 pb-4">
+        <p>Click to choose an icon and courses for your custom cup! Drag courses to rearrange. Click on a course again to remove it, or refresh the page to restart. When you're done, screenshot and share!</p>
+      </div>
+
+      <!-- Track List -->
+      <div class="flex flex-col mb-60">
+        <Cup v-for="(cup, index) in Cups" :cup-name="cup.cupName" :id="cup.cupName" :key="cup.cupName">
+          <CupIcon ref="cupIcons" :cup-name="cup.cupName" :image-path="getCupPath(index, cup.cupName)" @icon-clicked="onIconClicked" />
+          <Track v-for="track in cup.tracks" :key="track" :game-name="'Mario Kart 8 Deluxe'" :cup-name="cup.cupName"
+            :track-name="track" :image-path="getTrackPath(index, cup.cupName, track)" />
+        </Cup>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex flex-col items-center py-4">
+        <p>Developed by Kim-Lan</p>
+        <div class="flex flex-row items-center">
+          <a aria-label="github" href="https://github.com/Kim-Lan/mario-kart-cup-maker" target="_blank">
+            <img src="/assets/icons8-github-48.png" alt="ko-fi" width="24px" height="24px" />
+          </a>
+          <a aria-label="ko-fi" href="https://ko-fi.com/kimlan" target="_blank">
+            <img src="/assets/kofi-logo.png" alt="ko-fi" width="40px" height="40px" />
+          </a>
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
