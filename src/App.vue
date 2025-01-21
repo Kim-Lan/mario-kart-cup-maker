@@ -40,7 +40,7 @@ function getTrackPath(cupIndex, cupName, track) {
 <template>
   <div class="max-w-3xl mx-auto flex flex-col text-gray-900 dark:text-neutral-100 min-h-screen">
     <header class="flex flex-row space-between mt-4 mb-8">
-      <h1 class="text-2xl md:text-3xl font-bold">Mario Kart 8 DX Cup Maker</h1>
+      <h1 class="flex-1 text-2xl md:text-3xl font-bold">Mario Kart 8 DX Cup Maker</h1>
       <DarkModeToggle />
     </header>
 
