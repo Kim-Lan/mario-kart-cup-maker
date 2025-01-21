@@ -9,6 +9,7 @@ import Track from './components/Track.vue';
 import { selectedTracks, selectedIcon } from './stores.js'
 
 const cupIcons = ref([]);
+const customCup = ref(null);
 
 function onIconClicked() {
   for (const icon of cupIcons.value) {
@@ -35,18 +36,31 @@ function getTrackPath(cupIndex, cupName, track) {
     + `/${track.replaceAll(' ', '_').replaceAll(/[()]/g, '')}.png`;
 }
 
+async function downloadImage(event) {
+  const printCanvas = await html2canvas(customCup.value, { type: 'dataURL', backgroundColor: null });
+
+  const link = document.createElement('a');
+  link.setAttribute('download', 'custom-cup.png');
+  link.setAttribute(
+    'href',
+    printCanvas
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream')
+  );
+  link.click();
+}
 </script>
 
 <template>
   <div class="max-w-3xl mx-auto flex flex-col text-gray-900 dark:text-neutral-100 min-h-screen">
     <header class="flex flex-row space-between mt-4 mb-8">
-      <h1 class="text-2xl md:text-3xl font-bold">Mario Kart 8 DX Cup Maker</h1>
+      <h1 class="flex-1 text-2xl md:text-3xl font-bold">Mario Kart 8 DX Cup Maker</h1>
       <DarkModeToggle />
     </header>
 
     <main>
       <!-- Custom Cup -->
-      <div class="flex flex-col p-5 mx-10 mb-8 border-2 border-gray-900 dark:border-neutral-100 rounded-lg">
+      <div ref="customCup" class="flex flex-col p-5 border-2 border-gray-900 dark:border-neutral-100 bg-gray-100 dark:bg-neutral-800 rounded-lg">
         <div class="flex flex-row items-center">
           <CupIcon is-display v-bind="selectedIcon.value" />
           <input type="text" placeholder="My Custom Cup" class="input bg-transparent input-bordered rounded font-bold text-xl" />
@@ -62,9 +76,14 @@ function getTrackPath(cupIndex, cupName, track) {
         </draggable>
       </div>
 
+      <!-- Download Button -->
+      <div class="text-right mt-8 mb-12">
+        <button type="button" @click="downloadImage" class="rounded-lg p-2 border-2 border-gray-900 dark:border-neutral-100">Download Image</button>
+      </div>
+
       <!-- Instructions -->
       <div class="pl-8 pb-4">
-        <p>Click to choose an icon and courses for your custom cup! Drag courses to rearrange. Click on a course again to remove it, or refresh the page to restart. When you're done, screenshot and share!</p>
+        <p>Click to choose an icon and courses for your custom cup! Drag courses to rearrange. Click on a course again to remove it, or refresh the page to restart. When you're done, share with your friends!</p>
       </div>
 
       <!-- Track List -->
@@ -94,7 +113,6 @@ function getTrackPath(cupIndex, cupName, track) {
 
 <style>
 body {
-  @apply bg-gray-100;
-  @apply dark:bg-neutral-800
+  @apply bg-gray-100 dark:bg-neutral-800;
 }
 </style>
